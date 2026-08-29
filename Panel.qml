@@ -487,6 +487,13 @@ Panel {
               // own line instead of floating above it.
               anchors.baseline: numberLabel.baseline
               text: slot.iconGlyph
+              // The glyph is read out of a file another process writes, so
+              // never AutoText: Qt decides for itself that something
+              // tag-shaped is rich text and then fetches what it points at.
+              // parseIcon only ever returns a single codepoint today, which
+              // cannot form markup, but that is a property of parseIcon and
+              // not of this element.
+              textFormat: Text.PlainText
               color: button.foreground
               font.family: button.fontFamily
               font.pixelSize: button.fontSize
@@ -498,6 +505,7 @@ Panel {
               x: iconInk.tightBoundingRect.width + slot.pairGap
               anchors.verticalCenter: parent.verticalCenter
               text: slot.numberText
+              textFormat: Text.PlainText
               color: button.foreground
               font.family: button.fontFamily
               font.pixelSize: button.fontSize
